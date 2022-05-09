@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 class AppPaddings {
   static const screenPaddings = EdgeInsets.symmetric(
-    vertical: 8,
+    vertical: 16,
     horizontal: 12,
   );
 

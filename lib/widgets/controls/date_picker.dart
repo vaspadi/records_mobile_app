@@ -1,22 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile_app/widgets/controls/input.dart';
 
-class Datepicker extends StatelessWidget {
+class DatePicker extends StatelessWidget {
   final String? label;
   final EdgeInsetsGeometry? padding;
+  final void Function(DateTime?)? onChanged;
 
   final input = TextEditingController();
 
-  Datepicker({
+  DatePicker({
     this.label,
     this.padding,
+    this.onChanged,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Input(
+      controller: input,
       label: label,
       padding: padding,
       disabled: true,
@@ -29,7 +33,9 @@ class Datepicker extends StatelessWidget {
           lastDate: DateTime.now(),
         );
 
-        print(date);
+        onChanged?.call(date);
+
+        if (date != null) input.text = DateFormat('MM/dd/yyyy').format(date);
       },
     );
   }

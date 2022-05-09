@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class Input extends StatelessWidget {
   final String? label;
@@ -7,7 +6,9 @@ class Input extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool disabled;
   final Widget? suffixIcon;
+  final TextEditingController? controller;
   final void Function()? onTap;
+  final void Function(String)? onChanged;
 
   const Input({
     this.label,
@@ -15,7 +16,9 @@ class Input extends StatelessWidget {
     this.keyboardType,
     this.disabled = false,
     this.suffixIcon,
+    this.controller,
     this.onTap,
+    this.onChanged,
     Key? key,
   }) : super(key: key);
 
@@ -26,12 +29,14 @@ class Input extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: TextFormField(
+          controller: controller,
           keyboardType: keyboardType,
           decoration: InputDecoration(
             label: Text(label ?? ''),
             suffixIcon: suffixIcon,
           ),
           enabled: !disabled,
+          onChanged: onChanged,
         ),
       ),
     );
