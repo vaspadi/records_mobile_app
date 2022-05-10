@@ -10,8 +10,9 @@ import 'package:mobile_app/widgets/controls/input.dart';
 import 'package:mobile_app/widgets/controls/time_picker.dart';
 
 class RecordCreatingScreen extends StatelessWidget {
-  const RecordCreatingScreen({Key? key}) : super(key: key);
+  final formKey = GlobalKey<FormState>();
 
+  RecordCreatingScreen({Key? key}) : super(key: key);
   Client get client => controller.client;
 
   RecordsController get controller => Get.find<RecordsController>();
@@ -24,100 +25,115 @@ class RecordCreatingScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Create record'),
       ),
-      body: ListView(
-        padding: AppPaddings.screenPaddings,
-        children: [
-          const Text(
-            'Client data',
-            style: AppText.h2,
-          ),
-          Input(
-            label: 'First name',
-            padding: AppPaddings.verticalListGap,
-            onChanged: (v) {
-              controller.client = client.copyWith(firstName: v);
-            },
-          ),
-          Input(
-            label: 'Second name',
-            padding: AppPaddings.verticalListGap,
-            onChanged: (v) {
-              controller.client = client.copyWith(secondName: v);
-            },
-          ),
-          Input(
-            label: 'Personal code',
-            padding: AppPaddings.verticalListGap,
-            onChanged: (v) {
-              controller.client = client.copyWith(personalCode: v);
-            },
-          ),
-          Input(
-            label: 'Phone',
-            padding: AppPaddings.verticalListGap,
-            onChanged: (v) {
-              controller.client = client.copyWith(phone: v);
-            },
-          ),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 10, top: 16),
-            child: Text(
-              'Record data',
+      body: Form(
+        key: formKey,
+        child: ListView(
+          padding: AppPaddings.screenPaddings,
+          children: [
+            const Text(
+              'Client data',
               style: AppText.h2,
             ),
-          ),
-          Input(
-            label: 'Category',
-            padding: AppPaddings.verticalListGap,
-            onChanged: (v) {
-              controller.recordDto = record.copyWith(category: v);
-            },
-          ),
-          Input(
-            label: 'Price',
-            suffixIcon: const Icon(Icons.euro),
-            padding: AppPaddings.verticalListGap,
-            keyboardType: TextInputType.number,
-            onChanged: (v) {
-              controller.recordDto = record.copyWith(price: double.parse(v));
-            },
-          ),
-          Input(
-            label: 'Discount',
-            suffixIcon: const Icon(Icons.percent),
-            padding: AppPaddings.verticalListGap,
-            keyboardType: TextInputType.number,
-            onChanged: (v) {
-              controller.recordDto = record.copyWith(discount: int.parse(v));
-            },
-          ),
-          DatePicker(
-            label: 'Date',
-            padding: AppPaddings.verticalListGap,
-            onChanged: (v) {
-              controller.recordDto = record.copyWith(date: v);
-            },
-          ),
-          TimePicker(
-            label: 'Start time',
-            padding: AppPaddings.verticalListGap,
-          ),
-          TimePicker(
-            label: 'End time',
-            padding: AppPaddings.verticalListGap,
-          ),
-          ElevatedButton(
-            child: const Text(
-              'Create',
-              style: TextStyle(
-                fontSize: 18,
+            Input(
+              label: 'First name',
+              padding: AppPaddings.verticalListGap,
+              onChanged: (v) {
+                controller.client = client.copyWith(firstName: v);
+              },
+              validator: (v) => v!.isEmpty ? 'Field is required' : null,
+            ),
+            Input(
+              label: 'Second name',
+              padding: AppPaddings.verticalListGap,
+              onChanged: (v) {
+                controller.client = client.copyWith(secondName: v);
+              },
+            ),
+            Input(
+              label: 'Personal code',
+              padding: AppPaddings.verticalListGap,
+              onChanged: (v) {
+                controller.client = client.copyWith(personalCode: v);
+              },
+            ),
+            Input(
+              label: 'Phone',
+              padding: AppPaddings.verticalListGap,
+              onChanged: (v) {
+                controller.client = client.copyWith(phone: v);
+              },
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 10, top: 16),
+              child: Text(
+                'Record data',
+                style: AppText.h2,
               ),
             ),
-            onPressed: () {
-              controller.addRecord();
-            },
-          )
-        ],
+            Input(
+              label: 'Title',
+              padding: AppPaddings.verticalListGap,
+              onChanged: (v) {
+                controller.recordDto = record.copyWith(title: v);
+              },
+              validator: (v) => v!.isEmpty ? 'Field is required' : null,
+            ),
+            Input(
+              label: 'Category',
+              padding: AppPaddings.verticalListGap,
+              onChanged: (v) {
+                controller.recordDto = record.copyWith(category: v);
+              },
+            ),
+            Input(
+              label: 'Price',
+              suffixIcon: const Icon(Icons.euro),
+              padding: AppPaddings.verticalListGap,
+              keyboardType: TextInputType.number,
+              onChanged: (v) {
+                controller.recordDto = record.copyWith(price: double.parse(v));
+              },
+              validator: (v) => v!.isEmpty ? 'Field is required' : null,
+            ),
+            Input(
+              label: 'Discount',
+              suffixIcon: const Icon(Icons.percent),
+              padding: AppPaddings.verticalListGap,
+              keyboardType: TextInputType.number,
+              onChanged: (v) {
+                controller.recordDto = record.copyWith(discount: int.parse(v));
+              },
+            ),
+            DatePicker(
+              label: 'Date',
+              padding: AppPaddings.verticalListGap,
+              onChanged: (v) {
+                controller.recordDto = record.copyWith(date: v);
+              },
+            ),
+            TimePicker(
+              label: 'Start time',
+              padding: AppPaddings.verticalListGap,
+            ),
+            TimePicker(
+              label: 'End time',
+              padding: AppPaddings.verticalListGap,
+            ),
+            ElevatedButton(
+              child: const Text(
+                'Create',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              onPressed: () {
+                if (!formKey.currentState!.validate()) return;
+                controller.addRecord();
+                Navigator.pop(context);
+              },
+            )
+          ],
+        ),
       ),
     );
   }
@@ -126,7 +142,7 @@ class RecordCreatingScreen extends StatelessWidget {
     Navigator.push(
       context,
       GetPageRoute(
-        page: () => const RecordCreatingScreen(),
+        page: () => RecordCreatingScreen(),
       ),
     );
   }

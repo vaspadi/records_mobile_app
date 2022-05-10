@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
+import 'package:mobile_app/constants/format.dart';
 import 'package:mobile_app/models/client.dart';
 
 part 'record.g.dart';
@@ -24,15 +26,33 @@ class Record {
   final Client client;
 
   const Record({
-    this.title = '',
-    this.category = '',
-    this.price = 0,
+    required this.title,
+    required this.category,
+    required this.price,
+    required this.client,
     this.discount,
     this.date,
     this.startTime,
     this.endTime,
-    this.client = const Client(),
   });
+
+  factory Record.empty() {
+    return Record(
+      title: '',
+      category: '',
+      price: 0,
+      client: Client.empty(),
+    );
+  }
+
+  String? get formattedDate =>
+      date == null ? null : DateFormat(AppFromat.date).format(date!);
+
+  String? get formattedEndTime =>
+      startTime == null ? null : AppFromat.formatTime(endTime!);
+
+  String? get formattedStartTime =>
+      startTime == null ? null : AppFromat.formatTime(startTime!);
 
   Record copyWith({
     String? title,

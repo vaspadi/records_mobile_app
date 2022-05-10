@@ -5,7 +5,7 @@ part 'client.g.dart';
 @HiveType(typeId: 2)
 class Client {
   @HiveField(0)
-  final String? firstName;
+  final String firstName;
   @HiveField(1)
   final String? secondName;
   @HiveField(2)
@@ -14,11 +14,17 @@ class Client {
   final String? phone;
 
   const Client({
-    this.firstName,
+    required this.firstName,
     this.secondName,
     this.personalCode,
     this.phone,
   });
+
+  factory Client.empty() {
+    return const Client(
+      firstName: '',
+    );
+  }
 
   Client copyWith({
     String? firstName,

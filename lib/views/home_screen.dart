@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/constants/paddings.dart';
 import 'package:mobile_app/controllers/records_controller.dart';
 import 'package:mobile_app/views/record_creating_screen.dart';
+import 'package:mobile_app/views/record_info_screen.dart';
+import 'package:mobile_app/widgets/record_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,15 +24,27 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: controller.records.isEmpty
-            ? const Center(
-                child: Text('No data'),
-              )
-            : ListView(
-                children: controller.records.map((e) {
-                  return Text(e.client.firstName ?? 'user');
-                }).toList(),
-              ),
+        body: Padding(
+          padding: AppPaddings.screenPaddings,
+          child: controller.records.isEmpty
+              ? const Center(
+                  child: Text('No data'),
+                )
+              : ListView(
+                  children: controller.records.map((e) {
+                    return InkWell(
+                      onTap: () => RecordInfoScreen.goHere(
+                        context,
+                        record: e,
+                      ),
+                      child: RecordCard(
+                        e,
+                        padding: AppPaddings.verticalListGap,
+                      ),
+                    );
+                  }).toList(),
+                ),
+        ),
       ),
     );
   }

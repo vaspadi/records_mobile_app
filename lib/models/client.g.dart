@@ -17,7 +17,7 @@ class ClientAdapter extends TypeAdapter<Client> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Client(
-      firstName: fields[0] as String?,
+      firstName: fields[0] as String,
       secondName: fields[1] as String?,
       personalCode: fields[2] as String?,
       phone: fields[3] as String?,

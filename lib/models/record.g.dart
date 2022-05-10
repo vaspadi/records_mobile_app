@@ -20,11 +20,11 @@ class RecordAdapter extends TypeAdapter<Record> {
       title: fields[0] as String,
       category: fields[1] as String,
       price: fields[2] as double,
+      client: fields[7] as Client,
       discount: fields[3] as int?,
       date: fields[4] as DateTime?,
       startTime: fields[5] as TimeOfDay?,
       endTime: fields[6] as TimeOfDay?,
-      client: fields[7] as Client,
     );
   }
 

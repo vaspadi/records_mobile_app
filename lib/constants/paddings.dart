@@ -7,6 +7,6 @@ class AppPaddings {
   );
 
   static const verticalListGap = EdgeInsets.only(
-    bottom: 20,
+    bottom: 10,
   );
 }

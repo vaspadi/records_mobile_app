@@ -4,9 +4,7 @@ import 'package:mobile_app/models/client.dart';
 import 'package:mobile_app/models/record.dart';
 
 class RecordsController extends GetxController {
-  final _recordDto = Rx<Record>(const Record());
-
-  // final _records = RxList<Record>([]);
+  final _recordDto = Rx<Record>(Record.empty());
 
   final Box<Record> _recordsBox;
 
@@ -30,8 +28,7 @@ class RecordsController extends GetxController {
   void addRecord() {
     _recordsBox.add(_recordDto.value);
     _records.value = _recordsBox.values.toList();
-    _recordDto.value = const Record();
-    print(_recordsBox.length);
+    _recordDto.value = Record.empty();
   }
 
   List<Record> getRecords() => _recordsBox.values.toList();

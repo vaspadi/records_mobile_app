@@ -9,6 +9,7 @@ class Input extends StatelessWidget {
   final TextEditingController? controller;
   final void Function()? onTap;
   final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
 
   const Input({
     this.label,
@@ -19,6 +20,7 @@ class Input extends StatelessWidget {
     this.controller,
     this.onTap,
     this.onChanged,
+    this.validator,
     Key? key,
   }) : super(key: key);
 
@@ -37,6 +39,7 @@ class Input extends StatelessWidget {
           ),
           enabled: !disabled,
           onChanged: onChanged,
+          validator: validator,
         ),
       ),
     );
